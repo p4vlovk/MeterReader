@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option csharp_namespace = "MeterReader.gRPC";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service MeterReaderService {
+  rpc AddReading(ReadingPacket) returns (StatusMessage);
+  rpc AddDuplexStream(stream ReadingMessage) returns (stream ErrorMessage);
+  rpc AddReadingStream(stream ReadingMessage) returns (google.protobuf.Empty);
+  rpc GenerateToken(TokenRequest) returns (TokenResponse);
+}
+
+message TokenRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message TokenResponse {
+  bool success = 1;
+  string token = 2;
+  google.protobuf.Timestamp expiration = 3;
+}
+
+message ErrorMessage {
+  string message = 1;
+}
+
+message ReadingPacket {
+  repeated ReadingMessage readings = 1;
+  ReadingStatus status = 2;
+}
+
+message ReadingMessage {
+  int32 customer_id = 1;
+  int32 reading_value = 2;
+  string notes = 3;
+  google.protobuf.Timestamp reading_time = 5;
+  reserved 4;
+  reserved 'successful';
+}
+
+message StatusMessage {
+  ReadingStatus status = 1;
+  string message = 2;
+}
+
+enum ReadingStatus {
+  UNKNOWN = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+}
