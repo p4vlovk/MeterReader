@@ -1,3 +1,4 @@
+using Grpc.Net.ClientFactory;
 using MeterReadingClient;
 using MeterReadingClient.Interceptors;
 using static MeterReader.gRPC.MeterReaderService;
@@ -9,7 +10,7 @@ var host = Host
         .AddTransient<ReadingGenerator>()
         .AddGrpcClient<MeterReaderServiceClient>(options => options
             .Address = new Uri(hostContext.Configuration["ServiceUrl"]))
-        .AddInterceptor(serviceProvider =>
+        .AddInterceptor(InterceptorScope.Client, serviceProvider =>
         {
             var logger = serviceProvider.GetRequiredService<ILogger<TracerInterceptor>>();
             

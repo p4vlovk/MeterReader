@@ -17,14 +17,14 @@ public class TracerInterceptor : Interceptor
         where TRequest : class
         where TResponse : class
     {
-        this.logger.LogInformation(
+        this.logger.LogDebug(
             "Calling {MethodName} {MethodType} method. Payload received: {Type} : {Request}",
             context.Method.Name,
             context.Method.Type,
             request.GetType(),
             request);
         
-        this.logger.LogInformation(
+        this.logger.LogDebug(
             "Calling {MethodName} {MethodType} method at {UtcNow} UTC from machine {MachineName}",
             context.Method.Name,
             context.Method.Type,
@@ -41,14 +41,14 @@ public class TracerInterceptor : Interceptor
         where TRequest : class
         where TResponse : class
     {
-        this.logger.LogInformation(
+        this.logger.LogDebug(
             "Calling {MethodName} {MethodType} method. Payload received: {Type} : {Request}",
             context.Method.Name,
             context.Method.Type,
             request.GetType(),
             request);
         
-        this.logger.LogInformation(
+        this.logger.LogDebug(
             "Calling {MethodName} {MethodType} method at {UtcNow} UTC from machine {MachineName}",
             context.Method.Name,
             context.Method.Type,
